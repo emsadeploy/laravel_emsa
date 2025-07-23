@@ -14,9 +14,17 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('ap_paterno');
+            $table->string('ap_materno');
+            $table->string('nr_rut')->unique();
+            $table->string('nr_telefono')->unique();
+            $table->integer('nr_cargo')->nullable();
+            $table->integer('nr_gerencia')->nullable();
+            $table->enum('str_empresa', ['EMSA', 'DILAT'])->default('EMSA');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('is_active')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

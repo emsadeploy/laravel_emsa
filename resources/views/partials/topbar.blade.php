@@ -8,10 +8,10 @@
 
                 <a href="#" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ asset('images/logo_emsa.png') }}" alt="" height="22" class="my-3">
+                        <img src="{{ asset('images/logo.svg') }}" alt="" height="22" class="my-3">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('images/logo_emsa.png') }}" alt="" height="19" class="px-3 my-3">
+                        <img src="{{ asset('images/logo-dark.png') }}" alt="" height="19" class="px-3 my-3">
                     </span>
                 </a> 
             </div>

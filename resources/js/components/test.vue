@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Vue + Laravel 12 + Vite</h1>
+        <h1>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis aliquam dolorum, deleniti assumenda numquam laborum minus quam sed ipsum dolore quia sapiente recusandae iste velit unde eaque vel nemo ipsa.</h1>
     </div>
 </template>
 

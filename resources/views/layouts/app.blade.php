@@ -22,7 +22,7 @@
 
 </head>
 <!--<body class="sidebar-enable vertical-collpsed" data-bs-theme="dark"> -->
-<body class=""  >
+<body class="" data-sidebar="dark" >
     <div id="layout-wrapper">
 
         @include("partials/topbar")

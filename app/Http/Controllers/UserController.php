@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UtilsController;
 
 
-class HomeController extends Controller
+class UserController extends Controller
 {
     protected $utils;
 
@@ -16,10 +15,10 @@ class HomeController extends Controller
         $this->utils = $utils;
     }
 
-    public function index()
+    function index()
     {
         $session    = $this->utils->getSession();
 
-        return view('dashboard')->with('user_name', $session['user'])->with('rol',$session['rol']);
-    }
+        return view('users.UserList')->with('user_name', $session['user'])->with('rol',$session['rol']);
+    }   
 }

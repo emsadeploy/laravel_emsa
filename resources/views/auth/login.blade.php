@@ -42,7 +42,7 @@
 
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Email</label>
-                                    <input type="email" value="juan@gmail.com" name="email" class="form-control" id="email" required autofocus>
+                                    <input type="email" value="carlos@example.com" name="email" class="form-control" id="email" required autofocus>
                                 </div>
         
                                 <div class="mb-3">
