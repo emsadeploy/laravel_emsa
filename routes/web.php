@@ -11,16 +11,26 @@ Route::get('/', function () {return view('auth.login');});
 
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function () 
+{
     
+    Route::get('/init', [HomeController::class, 'init'])->name('init');
+
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    //Users
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    //Agrupa por el middlware admin de spatie
+    Route::group(['middleware' => ['role:Admin']], function () 
+    {
+        Route::get('/users/list', [UserController::class, 'index'])->name('users.index');
+        Route::get('/users', [UserController::class, 'list'])->name('users.list');
+        Route::post('/user', [UserController::class, 'create'])->name('users.create');
+    });
+    
+
 });
 
 require __DIR__.'/auth.php';

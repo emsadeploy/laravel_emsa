@@ -22,4 +22,15 @@ class HomeController extends Controller
 
         return view('dashboard')->with('user_name', $session['user'])->with('rol',$session['rol']);
     }
+
+    public function init()
+    {
+        $roles      = $this->utils->getRoles();
+        $gerencias  = $this->utils->getGerencies();
+
+        return [
+            'roles'     => $roles,
+            'gerencias' => $gerencias
+        ];
+    }
 }

@@ -18,6 +18,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'ap_paterno',
+        'ap_materno',
+        'nr_rut',
+        'nr_telefono',
+        'id_cargo',
+        'id_gerencia',
+        'str_empresa',
+        'is_active',
+        'remember_token',
     ];
 
    
@@ -34,4 +43,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function gerency()
+    {
+        return $this->belongsTo(Gerency::class, 'id_gerencia', 'id')->select(['id', 'name','is_active']);
+    }
+
 }
