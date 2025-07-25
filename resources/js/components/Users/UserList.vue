@@ -200,7 +200,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Confirmar Nueva Contraseña:</label>
-                                        <input v-model="new_user.confirm_password" type="password" class="form-control">
+                                        <input v-model="new_user.password_confirmation" type="password" class="form-control">
+                                        <small v-if="new_errors.password_confirmation">{{new_errors.password_confirmation[0]}}</small>
                                     </div>
                                 </div>
                             </div>
@@ -337,8 +338,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Confirmar Contraseña (4-8 caracteres) *:</label>
-                                        <input required v-model="user.confirm_password" maxlength="8" type="password" class="form-control">
-                                        <small v-if="errors.confirm_password">{{errors.confirm_password[0]}}</small>
+                                        <input required v-model="user.password_confirmation" maxlength="8" type="password" class="form-control">
+                                        <small v-if="errors.password_confirmation">{{errors.password_confirmation[0]}}</small>
                                     </div>
                                 </div>
                             </div>
@@ -391,7 +392,7 @@ export default {
                     'email'                 : '',
                     'nr_rut'                : '',
                     'password'              : '',
-                    'confirm_password'      : '',
+                    'password_confirmation'      : '',
                     'roles'                 : 1,
                     'id_gerencia'           : 0,
                     'roles'                 : [],
@@ -407,7 +408,7 @@ export default {
                     'email'                 : 'juan@ejemplo.com',
                     'nr_rut'                : '18241152-3',
                     'password'              : '12345678',
-                    'confirm_password'      : '12345678',
+                    'password_confirmation'      : '12345678',
                     'roles'                 : [],
                     'id_gerencia'           : 0,
                     'nr_telefono'           : '945897482',
@@ -516,7 +517,7 @@ export default {
             this.user.nr_telefono = parseInt(this.user.nr_telefono)
                 
             axios.post('/user',this.user)
-            .then(function(response)
+            .then((response) =>
             {
                 let resp = response.data
                 this.modalSweetAlert(resp)
@@ -524,10 +525,10 @@ export default {
                 this.getUsers()
                 
             })
-            .catch(function(error)
+            .catch((error) =>
             {
                 console.log(error)
-                if(error.response.status == 422)
+                if(error.response && error.response.status == 422)
                     this.errors = error.response.data.errors
                 else
                     this.modalSweetAlert({title: 'Error', text: 'Error al crear usuario', icon: 'error', confirmButtonText: 'Aceptar'})
@@ -544,9 +545,11 @@ export default {
                 this.modalSweetAlert(resp)
                 this.getUsers()
             })
-            .catch(function(error){
+            .catch((error) =>
+            {
 
-                if(error.response.status == 422)
+                console.log(error)
+                if(error.response && error.response.status == 422)
                     this.new_errors = error.response.data.errors
                 else
                     this.modalSweetAlert({title: 'Error', text: 'Error al actualizar usuario', icon: 'error', confirmButtonText: 'Aceptar'})

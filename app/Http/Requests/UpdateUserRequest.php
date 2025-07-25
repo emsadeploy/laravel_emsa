@@ -88,8 +88,9 @@ class UpdateUserRequest extends FormRequest
             ],
 
             // La regla 'confirmed' busca automáticamente un campo llamado 'password_confirmation'.
-            // No necesitas una regla separada para 'confirm_password'.
+            // No necesitas una regla separada para 'password_confirmation'.
             'password' => 'nullable|string|min:4|max:8|confirmed',
+            'password_confirmation' => 'nullable|string|min:4|max:8|same:password',
 
             // --- Validación de Roles Corregida ---
             // Ahora 'roles' es un arreglo de IDs gracias a prepareForValidation.
@@ -101,28 +102,29 @@ class UpdateUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'required'           => 'El campo :attribute es requerido.',
-            'string'             => 'El campo :attribute debe ser texto.',
-            'email'              => 'El :attribute no es un correo válido.',
-            'unique'             => 'El :attribute ya se encuentra registrado por otro usuario.',
-            'exists'             => 'El :attribute seleccionado no es válido.',
-            'numeric'            => 'El campo :attribute debe ser numérico.',
-            'not_in'             => 'Debe seleccionar un :attribute válido.',
-            'min'                => 'La :attribute debe tener al menos :min caracteres.',
-            'max'                => 'La :attribute no debe tener más de :max caracteres.',
-            'confirmed'          => 'La confirmación de contraseña no coincide.',
-            'array'              => 'Debe seleccionar al menos un :attribute.',
-            'empresa.in'         => 'La empresa debe ser una de las siguientes opciones: EMSA, DILAT.',
-            'nr_telefono.digits' => 'El número de teléfono debe tener 9 dígitos.',
-            'nr_telefono.unique' => 'El número de teléfono ya está en uso por otro usuario.',
-            'id_empresa.exists'  => 'La empresa seleccionada no es válida.',
-            'id_gerencia.exists' => 'La gerencia seleccionada no es válida.',
-            'nr_rut.required'    => 'El campo RUT es obligatorio.',
-            'nr_rut.string'      => 'El campo RUT debe ser un texto.',
-            'nr_rut.cl_rut'      => 'El RUT ingresado no es válido.',
-            'nr_rut.unique'      => 'El RUT ya se encuentra registrado por otro usuario.',
-            'roles.required'     => 'Debe seleccionar al menos un rol.',
-            'roles.*.exists'     => 'El rol seleccionado no es válido.',
+            'required'              => 'El campo :attribute es requerido.',
+            'string'                => 'El campo :attribute debe ser texto.',
+            'email'                 => 'El :attribute no es un correo válido.',
+            'unique'                => 'El :attribute ya se encuentra registrado por otro usuario.',
+            'exists'                => 'El :attribute seleccionado no es válido.',
+            'numeric'               => 'El campo :attribute debe ser numérico.',
+            'not_in'                => 'Debe seleccionar un :attribute válido.',
+            'min'                   => 'La :attribute debe tener al menos :min caracteres.',
+            'max'                   => 'La :attribute no debe tener más de :max caracteres.',
+            'confirmed'             => 'La confirmación de contraseña no coincide.',
+            'array'                 => 'Debe seleccionar al menos un :attribute.',
+            'empresa.in'            => 'La empresa debe ser una de las siguientes opciones: EMSA, DILAT.',
+            'nr_telefono.digits'    => 'El número de teléfono debe tener 9 dígitos.',
+            'nr_telefono.unique'    => 'El número de teléfono ya está en uso por otro usuario.',
+            'id_empresa.exists'     => 'La empresa seleccionada no es válida.',
+            'id_gerencia.exists'    => 'La gerencia seleccionada no es válida.',
+            'nr_rut.required'       => 'El campo RUT es obligatorio.',
+            'nr_rut.string'         => 'El campo RUT debe ser un texto.',
+            'nr_rut.cl_rut'         => 'El RUT ingresado no es válido.',
+            'nr_rut.unique'         => 'El RUT ya se encuentra registrado por otro usuario.',
+            'roles.required'        => 'Debe seleccionar al menos un rol.',
+            'roles.*.exists'        => 'El rol seleccionado no es válido.',
+            'password_confirmation.same' => 'La confirmación de contraseña debe coincidir con la contraseña.',
 
         ];
     }
@@ -138,9 +140,10 @@ class UpdateUserRequest extends FormRequest
             'nr_telefono'           => 'Teléfono',
             'id_gerencia'           => 'Gerencia',
             'password'              => 'Contraseña',
-            'password_confirmation' => 'Confirmación de Contraseña', // Atributo para el mensaje de la regla 'confirmed'
+            'password_confirmation'      => 'Confirmación de Contraseña', // Atributo para el mensaje de la regla 'confirmed'
             'roles'                 => 'Roles',
             'id_empresa'            => 'Empresa',
+
         ];
     }
 }
