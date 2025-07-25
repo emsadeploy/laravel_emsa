@@ -13,7 +13,7 @@ class GerencySeeder extends Seeder
      */
     public function run(): void
     {
-        $array_gerencias= [
+        $gerencias_emsa= [
             'Gerencia de Finanzas',
             'Gerencia de Recursos Humanos',
             'Gerencia de Marketing',
@@ -26,11 +26,25 @@ class GerencySeeder extends Seeder
             'Gerencia de Investigación y Desarrollo',
         ];
 
-        foreach ($array_gerencias as $gerencia) {
+        $gerencias_dilat = ['Gerencia Logística', 'Gerencia de Operaciones', 'Gerencia de Ventas'];
+
+        foreach ($gerencias_emsa as $gerencia) 
+        {
             Gerency::create([
-                'name' => $gerencia,
-                'description' => 'Descripción de ' . $gerencia,
-                'is_active' => true,
+                'name'          => $gerencia,
+                'description'   => 'Descripción de ' . $gerencia,
+                'is_active'     => true,
+                'id_empresa'       => 2, // Assuming EMSA has id_empresa = 1
+            ]);
+        }
+
+        foreach ($gerencias_dilat as $gerencia) 
+        {
+            Gerency::create([
+                'name'          => $gerencia,
+                'description'   => 'Descripción de ' . $gerencia,
+                'is_active'     => true,
+                'id_empresa'    => 3, // Assuming DILAT has id_empresa = 2
             ]);
         }
 

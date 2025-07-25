@@ -25,12 +25,12 @@ class HomeController extends Controller
 
     public function init()
     {
-        $roles      = $this->utils->getRoles();
-        $gerencias  = $this->utils->getGerencies();
+        $empresas   = $this->utils->getEmpresas(); 
+        //$roles      = $this->utils->getRoles();
 
         return [
-            'roles'     => $roles,
-            'gerencias' => $gerencias
+            'empresas'  => $empresas,
+            //'roles'     => $roles,
         ];
     }
 }

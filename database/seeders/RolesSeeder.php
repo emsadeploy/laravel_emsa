@@ -16,17 +16,22 @@ class RolesSeeder extends Seeder
     public function run(): void
     {
 
-        Role::create(['name' => 'Admin']);
-        Role::create(['name' => 'Admin-EMSA']);
-        Role::create(['name' => 'Admin-DILAT']);
+        //Roles EMSA
+        
+        Role::create(['name' => 'Admin','id_empresa'                                => 1]);
+        Role::create(['name' => 'Admin-EMSA','id_empresa'                           => 2]);
+        Role::create(['name' => 'Gerencia de Finanzas','id_empresa'                 => 2]);
+        Role::create(['name' => 'Gerencia de Ventas y Marketing','id_empresa'       => 2]);
+        Role::create(['name' => 'Gerencia de Operaciones y Logística', 'id_empresa' => 2]);
+        Role::create(['name' => 'Gerencia de Recursos Humanos', 'id_empresa'        => 2]);
+        Role::create(['name' => 'Gerencia de Tecnología', 'id_empresa'              => 2]);
+        Role::create(['name' => 'Gerencia General', 'id_empresa'                    => 2]);
 
-        Role::create(['name' => 'Gerencia de Finanzas']);
-        Role::create(['name' => 'Gerencia de Ventas y Marketing']);
-        Role::create(['name' => 'Gerencia de Operaciones y Logística']);
-        Role::create(['name' => 'Gerencia de Recursos Humanos']);
-        Role::create(['name' => 'Gerencia de Tecnología']);
-        Role::create(['name' => 'Gerencia General']);
-        Role::create(['name' => 'Vendedores']);
+        //Roles DILAT
+        Role::create(['name' => 'Admin-DILAT','id_empresa'                          => 3]);
+        Role::create(['name' => 'Vendedores', 'id_empresa'                          => 3]);
+
+
 
     }
 }

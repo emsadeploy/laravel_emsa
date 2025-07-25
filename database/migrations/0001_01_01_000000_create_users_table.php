@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('nr_telefono')->unique();
             $table->integer('id_cargo')->nullable();
             $table->integer('id_gerencia')->nullable();
-            $table->enum('str_empresa', ['EMSA', 'DILAT'])->default('EMSA');
+            $table->integer('id_empresa')->default(2);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

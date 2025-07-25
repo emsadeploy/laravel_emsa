@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 //models
 use App\Models\Roles;
 use App\Models\Gerency;
+use App\Models\Empresa;
 
 class UtilsController extends Controller
 {
@@ -19,17 +20,14 @@ class UtilsController extends Controller
         return ['user' => $user->name,'rol'  => $rol[0]];
     }
 
-    function getRoles()
+    
+
+    function getEmpresas()
     {
-        $roles = Roles::select('id','name')->get();
-
-        return $roles;
-    }
-
-    function getGerencies()
-    {
-        $gerencies = Gerency::select('id', 'name')->where('is_active', 1)->get();
-
-        return $gerencies;
+        return Empresa::select('id', 'name', 'description', 'is_active')
+                        ->whereIn('id',[2,3])
+                        ->with('gerencias')
+                        ->with('roles')
+                        ->where('is_active', true)->get();
     }
 }

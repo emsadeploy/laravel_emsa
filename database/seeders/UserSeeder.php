@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
                 'nr_telefono' => '912345678',
                 'id_cargo' => 1,
                 'id_gerencia' => 1,
-                'str_empresa' => 'EMSA',
+                'id_empresa' => 2,
                 'email' => 'carlos@example.com',
                 'role' => 'Admin',
             ],
@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
                 'nr_telefono' => '912345679',
                 'id_cargo' => 2,
                 'id_gerencia' => 2,
-                'str_empresa' => 'DILAT',
+                'id_empresa' => 3,
                 'email' => 'lucia@example.com',
                 'role' => 'Admin-DILAT',
             ],
@@ -47,7 +47,7 @@ class UserSeeder extends Seeder
                 'nr_telefono' => '912345680',
                 'id_cargo' => 3,
                 'id_gerencia' => 3,
-                'str_empresa' => 'EMSA',
+                'id_empresa' => 2,
                 'email' => 'fernando@example.com',
                 'role' => 'Admin-EMSA',
             ],
@@ -59,7 +59,7 @@ class UserSeeder extends Seeder
                 'nr_telefono' => '912345681',
                 'id_cargo' => 4,
                 'id_gerencia' => 4,
-                'str_empresa' => 'EMSA',
+                'id_empresa' => 2,
                 'email' => 'marcela@example.com',
                 'role' => 'Gerencia de Finanzas',
             ],
@@ -71,7 +71,7 @@ class UserSeeder extends Seeder
                 'nr_telefono' => '912345682',
                 'id_cargo' => 5,
                 'id_gerencia' => 5,
-                'str_empresa' => 'DILAT',
+                'id_empresa' => 3,
                 'email' => 'diego@example.com',
                 'role' => 'Gerencia de Tecnología',
             ],
@@ -83,7 +83,7 @@ class UserSeeder extends Seeder
                 'nr_telefono' => '912345683',
                 'id_cargo' => 6,
                 'id_gerencia' => 6,
-                'str_empresa' => 'EMSA',
+                'id_empresa' => 2,
                 'email' => 'valentina@example.com',
                 'role' => 'Gerencia de Ventas y Marketing',
             ],
@@ -95,34 +95,11 @@ class UserSeeder extends Seeder
                 'nr_telefono' => '912345684',
                 'id_cargo' => 7,
                 'id_gerencia' => 7,
-                'str_empresa' => 'EMSA',
+                'id_empresa' => 2,
                 'email' => 'andres@example.com',
                 'role' => 'Gerencia de Recursos Humanos',
             ],
-            [
-                'name' => 'Camila',
-                'ap_paterno' => 'Herrera',
-                'ap_materno' => 'Gallardo',
-                'nr_rut' => '88888888-8',
-                'nr_telefono' => '912345685',
-                'id_cargo' => 8,
-                'id_gerencia' => 8,
-                'str_empresa' => 'DILAT',
-                'email' => 'camila@example.com',
-                'role' => 'Gerencia de Operaciones y Logística',
-            ],
-            [
-                'name' => 'Javier',
-                'ap_paterno' => 'Vega',
-                'ap_materno' => 'Muñoz',
-                'nr_rut' => '99999999-9',
-                'nr_telefono' => '912345686',
-                'id_cargo' => 9,
-                'id_gerencia' => 9,
-                'str_empresa' => 'DILAT',
-                'email' => 'javier@example.com',
-                'role' => 'Gerencia General',
-            ],
+            
             [
                 'name' => 'Sofía',
                 'ap_paterno' => 'Silva',
@@ -131,27 +108,28 @@ class UserSeeder extends Seeder
                 'nr_telefono' => '912345687',
                 'id_cargo' => 10,
                 'id_gerencia' => 10,
-                'str_empresa' => 'EMSA',
+                'id_empresa' => 2,
                 'email' => 'sofia@example.com',
                 'role' => 'Vendedores',
             ],
         ];
 
-        foreach ($usuarios as $data) {
-            $user = User::create([
-                'name' => $data['name'],
-                'ap_paterno' => $data['ap_paterno'],
-                'ap_materno' => $data['ap_materno'],
-                'nr_rut' => $data['nr_rut'],
-                'nr_telefono' => $data['nr_telefono'],
-                'id_cargo' => $data['id_cargo'],
-                'id_gerencia' => $data['id_gerencia'],
-                'str_empresa' => $data['str_empresa'],
-                'email' => $data['email'],
-                'password' => bcrypt('12345678'),
-            ]);
+        foreach ($usuarios as $data) 
+            {
+                $user = User::create([
+                    'name'          => $data['name'],
+                    'ap_paterno'    => $data['ap_paterno'],
+                    'ap_materno'    => $data['ap_materno'],
+                    'nr_rut'        => $data['nr_rut'],
+                    'nr_telefono'   => $data['nr_telefono'],
+                    'id_cargo'      => $data['id_cargo'],
+                    'id_gerencia'   => $data['id_gerencia'],
+                    'id_empresa'    => $data['id_empresa'],
+                    'email'         => $data['email'],
+                    'password'      => bcrypt('12345678'),
+                ]);
 
-            $user->assignRole($data['role']);
-        }
+                $user->assignRole($data['role']);
+            }
     }
 }

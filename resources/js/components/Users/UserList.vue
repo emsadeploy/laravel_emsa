@@ -43,9 +43,10 @@
                             <span v-else>SIN DEFINIR</span>
                         </td>
                         <td >
-                            <span class="badge" :class="{'bg-primary': user.str_empresa === 'EMSA', 'bg-secondary': user.str_empresa == 'DILAT'}">
-                                {{ user.str_empresa }}
-                            </span>
+                            <span class="badge" :class="{'bg-primary': user.empresa.name === 'EMSA', 'bg-secondary': user.empresa.name == 'DILAT'}">
+                                {{ user.empresa.name }}
+                            </span> 
+                            
                         </td>
                         <td>
                              <span class="badge" :class="{'bg-danger': user.is_active === 0, 'bg-success': user.is_active == 1}">
@@ -89,111 +90,122 @@
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form @submit.prevent="updateUser">
 
-                            <!-- SECCIÓN 1: Datos Personales y de Contacto -->
-                            <div class="mb-4">
-                                <h6 class="text-primary">Datos Personales y de Contacto</h6>
-                                <hr class="mt-1">
-                                <div class="row gy-4">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="form-label">Nombre *:</label>
-                                            <input required v-model="new_user.name" type="text" class="form-control">
-                                            <small v-if="new_errors.name">{{new_errors.name[0]}}</small>
-                                        </div>
+                        <!-- SECCIÓN 1: Datos Personales y de Contacto -->
+                        <div class="mb-4">
+                            <h6 class="text-primary">Datos Personales y de Contacto</h6>
+                            <hr class="mt-1">
+                            <div class="row gy-4">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Nombre *:</label>
+                                        <input required v-model="new_user.name" type="text" class="form-control">
+                                        <small v-if="new_errors.name">{{new_errors.name[0]}}</small>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="form-label">Apellido Paterno *:</label>
-                                            <input required v-model="new_user.ap_paterno" type="text" class="form-control">
-                                            <small v-if="new_errors.ap_paterno">{{new_errors.ap_paterno[0]}}</small>
-                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Apellido Paterno *:</label>
+                                        <input required v-model="new_user.ap_paterno" type="text" class="form-control">
+                                        <small v-if="new_errors.ap_paterno">{{new_errors.ap_paterno[0]}}</small>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="form-label">Apellido Materno *:</label>
-                                            <input required v-model="new_user.ap_materno" type="text" class="form-control">
-                                            <small v-if="new_errors.ap_materno">{{new_errors.ap_materno[0]}}</small>
-                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Apellido Materno *:</label>
+                                        <input required v-model="new_user.ap_materno" type="text" class="form-control">
+                                        <small v-if="new_errors.ap_materno">{{new_errors.ap_materno[0]}}</small>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="form-label">Rut* :</label>
-                                            <input required v-model="new_user.nr_rut" type="text" class="form-control">
-                                            <small v-if="new_errors.nr_rut">{{new_errors.nr_rut[0]}}</small>
-                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Rut* :</label>
+                                        <input required v-model="new_user.nr_rut" type="text" placeholder="11111111-1" class="form-control">
+                                        <small v-if="new_errors.nr_rut">{{new_errors.nr_rut[0]}}</small>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="form-label">Email :</label>
-                                            <input required v-model="new_user.email" type="email" class="form-control">
-                                            <small v-if="new_errors.email">{{new_errors.email[0]}}</small>
-                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Email :</label>
+                                        <input required v-model="new_user.email" type="email" class="form-control">
+                                        <small v-if="new_errors.email">{{new_errors.email[0]}}</small>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="form-label">Teléfono :</label>
-                                            <input required v-model="new_user.nr_telefono" type="text" class="form-control">
-                                            <small v-if="new_errors.nr_telefono">{{new_errors.nr_telefono[0]}}</small>
-                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Teléfono (9 dígitos):</label>
+                                        <input required v-model="new_user.nr_telefono" type="text" class="form-control">
+                                        <small v-if="new_errors.nr_telefono">{{new_errors.nr_telefono[0]}}</small>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- SECCIÓN 2: Asignación y Roles -->
-                            <div class="mb-4">
-                                <h6 class="text-primary">Asignación y Roles</h6>
-                                <hr class="mt-1">
-                                <div class="row gy-4">
-                                    <div v-if="gerencias.length" class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-label">Gerencia :</label>
-                                            <select v-model="new_user.id_gerencia" class="form-control">
-                                                <option v-for="(item,index) in gerencias" :key="index" :value="item.id">{{ item.name }}</option>
-                                            </select>
-                                            <small v-if="new_errors.id_gerencia">{{new_errors.id_gerencia[0]}}</small>
-                                        </div>
+                        <!-- SECCIÓN 2: Asignación y Roles -->
+                        <div class="mb-4">
+                            <h6 class="text-primary">Asignación y Roles Update</h6>
+                            <hr class="mt-1">
+                            <div class="row gy-4">
+
+                                <div  class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="form-label">Empresa :</label>
+                                        <select v-model="new_user.id_empresa" class="form-control">
+                                            <option v-for="(item,index) in empresas" :key="index" :value="item.id">{{ item.name }}</option>
+                                        </select>
+                                        <small v-if="errors.id_empresa">{{errors.id_empresa[0]}}</small>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-label">Roles :</label>
-                                            <multiselect id="edit-user-roles"
-                                                :multiple="true"
-                                                v-model="new_user.roles" 
-                                                :options="roles" 
-                                                placeholder="Seleccione por lo menos un rol" 
-                                                label="name"
-                                                track-by="id">
-                                            </multiselect>
-                                            <small v-if="new_errors.rol">{{new_errors.rol[0]}}</small>
-                                        </div>
+                                </div>
+
+                                <div  class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Gerencia :</label>
+                                        <select v-model="new_user.id_gerencia" class="form-control">
+                                            <option v-for="(item,index) in gerencias" :key="index" :value="item.id">{{ item.name }}</option>
+                                        </select>
+                                        <small v-if="new_errors.id_gerencia">{{new_errors.id_gerencia[0]}}</small>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Roles :</label>
+                                        <multiselect id="edit-user-roles"
+                                            :multiple="true"
+                                            v-model="new_user.roles" 
+                                            :options="roles" 
+                                            placeholder="Seleccione por lo menos un rol" 
+                                            label="name"
+                                            track-by="id">
+                                        </multiselect>
+                                        <small v-if="new_errors.roles">{{new_errors.roles[0]}}</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN 3: Credenciales de Seguridad -->
+                        <div class="mb-2">
+                            <h6 class="text-primary">Actualizar Contraseña (Opcional)</h6>
+                            <hr class="mt-1">
+                            <div class="row gy-4">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Nueva Contraseña:</label>
+                                        <input v-model="new_user.password" type="password" class="form-control" placeholder="Dejar en blanco para no cambiar">
+                                        <small v-if="new_errors.password">{{new_errors.password[0]}}</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Confirmar Nueva Contraseña:</label>
+                                        <input v-model="new_user.confirm_password" type="password" class="form-control">
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- SECCIÓN 3: Credenciales de Seguridad -->
-                            <div class="mb-2">
-                                <h6 class="text-primary">Actualizar Contraseña (Opcional)</h6>
-                                <hr class="mt-1">
-                                <div class="row gy-4">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-label">Nueva Contraseña:</label>
-                                            <input v-model="new_user.password" type="password" class="form-control" placeholder="Dejar en blanco para no cambiar">
-                                            <small v-if="new_errors.password">{{new_errors.password[0]}}</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-label">Confirmar Nueva Contraseña:</label>
-                                            <input v-model="new_user.confirm_password" type="password" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </form>
                     </div>
                     <div class="modal-footer bg-light">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -245,7 +257,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label">Rut* :</label>
-                                        <input required v-model="user.nr_rut" type="text" class="form-control">
+                                        <input required v-model="user.nr_rut"  placeholder="11111111-1" type="text" class="form-control">
                                         <small v-if="errors.nr_rut">{{errors.nr_rut[0]}}</small>
                                     </div>
                                 </div>
@@ -258,20 +270,31 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label class="form-label">Teléfono :</label>
-                                        <input required v-model="user.nr_telefono" type="text" class="form-control">
+                                        <label class="form-label">Teléfono (9 dígitos) :</label>
+                                        <input required v-model="user.nr_telefono" type="number" class="form-control">
                                         <small v-if="errors.nr_telefono">{{errors.nr_telefono[0]}}</small>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- SECCIÓN 2: Asignación y Roles -->
                         <div class="mb-4">
                             <h6 class="text-primary">Asignación y Roles</h6>
                             <hr class="mt-1">
                             <div class="row gy-4">
-                                <div v-if="gerencias.length" class="col-md-6">
+
+                                <div  class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="form-label">Empresa :</label>
+                                        <select v-model="user.id_empresa" class="form-control">
+                                            <option v-for="(item,index) in empresas" :key="index" :value="item.id">{{ item.name }}</option>
+                                        </select>
+                                        <small v-if="errors.id_empresa">{{errors.id_empresa[0]}}</small>
+                                    </div>
+                                </div>
+
+
+                                <div  class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label">Gerencia :</label>
                                         <select v-model="user.id_gerencia" class="form-control">
@@ -280,10 +303,11 @@
                                         <small v-if="errors.id_gerencia">{{errors.id_gerencia[0]}}</small>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Roles :</label>
-                                        <multiselect id="single-select-search"
+                                        <multiselect 
                                             :multiple="true"
                                             v-model="user.roles" 
                                             :options="roles" 
@@ -292,7 +316,7 @@
                                             label="name"
                                             track-by="id">
                                         </multiselect>
-                                        <small v-if="errors.rol">{{errors.rol[0]}}</small>
+                                        <small v-if="errors.roles">{{errors.roles[0]}}</small>
                                     </div>
                                 </div>
                             </div>
@@ -346,12 +370,11 @@ export default {
     },
     data() {
         return {
-            users: [],
+            users                   : [],
             offset                  : 3,
             new_errors              : [],
             errors                  : [],
-            roles                   : [],
-            gerencias               : [],
+            empresas                : [],
             pagination : {
                     'total'         : 0,
                     'current_page'  : 0,
@@ -360,34 +383,52 @@ export default {
                     'from'          : 0,
                     'to'            : 0,
                 },
-            new_user : {
-                    'nombre'          : '',
-                    'ap_paterno'    : '',
-                    'ap_materno'    : '',
-                    'email'         : '',
-                    'nr_rut'        : '',
-                    'password'      : '',
-                    'roles'         : 1,
-                    'id_gerencia'   : 0,
-                    'roles'         : [],
-                },
-            user : {
-                'name'                  : 'Juan ',
-                'ap_paterno'            : 'Castillo',
-                'ap_materno'            : 'Bravo',
-                'email'                 : 'juan@ejemplo.com',
-                'nr_rut'                : '18241152-3',
-                'password'              : '12345678',
-                'confirm_password'      : '12345678',
-                'roles'                 : [],
-                'id_gerencia'           : 0,
-                'nr_telefono'           : '9456897482',
-                'anexo'                 : ''
-                },
+            new_user : 
+            {
+                    'nombre'                : '',
+                    'ap_paterno'            : '',
+                    'ap_materno'            : '',
+                    'email'                 : '',
+                    'nr_rut'                : '',
+                    'password'              : '',
+                    'confirm_password'      : '',
+                    'roles'                 : 1,
+                    'id_gerencia'           : 0,
+                    'roles'                 : [],
+                    'nr_telefono'           : '',
+                    'id_empresa'            : 2,
+
+            },
+            user : 
+            {
+                    'name'                  : 'Juan ',
+                    'ap_paterno'            : 'Castillo',
+                    'ap_materno'            : 'Bravo',
+                    'email'                 : 'juan@ejemplo.com',
+                    'nr_rut'                : '18241152-3',
+                    'password'              : '12345678',
+                    'confirm_password'      : '12345678',
+                    'roles'                 : [],
+                    'id_gerencia'           : 0,
+                    'nr_telefono'           : '945897482',
+                    'id_empresa'            : 2,
+            },
         };
     },
     computed:
     {
+        gerencias()
+        {
+            const gerencias = this.empresas.find(e => e.id === this.user.id_empresa)?.gerencias || [];
+
+            return gerencias;
+        },
+        roles()
+        {
+            const roles = this.empresas.find(e => e.id === this.user.id_empresa)?.roles || [];
+            
+            return roles;
+        },
         isActived: function()
         {
             return this.pagination.current_page;
@@ -417,6 +458,20 @@ export default {
 
         }
     },
+    watch: {
+        // Observador para la propiedad 'roles' dentro del objeto 'user'
+        'user.roles'(newValue) 
+        {
+            if (newValue && !Array.isArray(newValue)) 
+                this.user.roles = [newValue];
+            
+        },
+        'new_user.roles'(newValue) 
+        {
+            if (newValue && !Array.isArray(newValue)) 
+                this.new_user.roles = [newValue];
+        }
+    },
     methods: 
     {   init()
         {
@@ -425,19 +480,14 @@ export default {
             {
                 let resp        = response.data;
                 this.roles      = resp.roles;
-                this.gerencias  = resp.gerencias;
-
-                if(this.gerencias.length)
-                {
-                    this.user.id_gerencia = this.gerencias[0].id;
-                    this.new_user.id_gerencia = this.gerencias[0].id;
-                }
+                this.empresas   = resp.empresas;
+                
             })
         },
-        showModalCreate()
+        cleanUser()
         {
             this.new_user = {
-                'nombre'          : '',
+                'nombre'        : '',
                 'ap_paterno'    : '',
                 'ap_materno'    : '',
                 'email'         : '',
@@ -448,92 +498,78 @@ export default {
                 'nr_telefono'   : '',
                 'roles'         : [],
             }
+        },
+        showModalCreate()
+        {
+            this.cleanUser()
             this.new_errors = [];
         },
         showModalEdit(user)
-        {
-            let me                      = this
-            me.new_user                 = user
-            console.log({'new_user': me.new_user})
-
+        {   
+            this.new_user                   = user
+            this.new_user.roles             = user.roles.map(role => ({id: role.id,name: role.name}));
         },
         insertUser()
         {
-            let me = this;
+            console.log("metodo insertUser", this.user)
 
-            me.user.nr_telefono = parseInt(me.user.nr_telefono)
+            this.user.nr_telefono = parseInt(this.user.nr_telefono)
                 
-            axios.post('/user',me.user)
+            axios.post('/user',this.user)
             .then(function(response)
             {
                 let resp = response.data
-                me.modalSweetAlert(resp)
-
-                if(resp.error == 0)
-                    me.user =  {
-                                    'name'          : '',
-                                    'apellido'    : '',
-                                    'ap_materno'    : '',
-                                    'email'         : '',
-                                    'rut'           : '',
-                                    'password'      : '',
-                                    'nr_telefono'   : '',
-                                    'rol'           : [],
-                                }
-
-                me.getUsers()
+                this.modalSweetAlert(resp)
+                this.cleanUser()
+                this.getUsers()
                 
             })
             .catch(function(error)
             {
-               
-
+                console.log(error)
                 if(error.response.status == 422)
-                    me.errors = error.response.data.errors
+                    this.errors = error.response.data.errors
                 else
-                    me.modalSweetAlert({title: 'Error', text: 'Error al crear usuario', icon: 'error', confirmButtonText: 'Aceptar'})
+                    this.modalSweetAlert({title: 'Error', text: 'Error al crear usuario', icon: 'error', confirmButtonText: 'Aceptar'})
             })
         },
         updateUser()
         {
-            let me = this;
-            return
+            console.log("metodo updateUser", this.new_user)
 
-            axios.post('/user/update',me.new_user)
-            .then(function(response)
+            axios.put('/user',this.new_user)
+            .then((response) =>
             {
                 let resp = response.data
-                me.modalSweetAlert(resp)
-                me.getUsers()
+                this.modalSweetAlert(resp)
+                this.getUsers()
             })
             .catch(function(error){
 
                 if(error.response.status == 422)
-                    me.new_errors = error.response.data.errors
+                    this.new_errors = error.response.data.errors
+                else
+                    this.modalSweetAlert({title: 'Error', text: 'Error al actualizar usuario', icon: 'error', confirmButtonText: 'Aceptar'})
             })
         },
         cambiarPagina(page)
         {
-            let me = this;
-            me.pagination.current_page = page;
-            me.getUsers(page);
+            this.pagination.current_page = page;
+            this.getUsers(page);
         },
-        getUsers(page=1)
+        getUsers(page = 1) 
         {
-            let me = this;
-
-            axios.get('/users',{params: { page: page }})
-            .then(function(response)
-            {
-                var resp        = response.data;
-                me.users        = resp.users.data;
-                me.pagination   = resp.pagination;
-            })
+            axios.get('/users', { params: { page: page } })
+                .then((response) => {
+                    const resp = response.data;
+                    console.log("respuesta getUsers", resp.users.data);
+                    this.users = resp.users.data;
+                    this.pagination = resp.pagination;
+                });
         },
     },
     name: 'App',
     mounted() {
-        console.log('Vue component mounted successfully!');
         this.init()
         this.getUsers()
 

@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function ()
         Route::get('/users/list', [UserController::class, 'index'])->name('users.index');
         Route::get('/users', [UserController::class, 'list'])->name('users.list');
         Route::post('/user', [UserController::class, 'create'])->name('users.create');
+        Route::put('/user', [UserController::class, 'update'])->name('users.update');
     });
     
 

@@ -27,6 +27,7 @@ class User extends Authenticatable
         'str_empresa',
         'is_active',
         'remember_token',
+        'id_empresa'
     ];
 
    
@@ -47,6 +48,11 @@ class User extends Authenticatable
     public function gerency()
     {
         return $this->belongsTo(Gerency::class, 'id_gerencia', 'id')->select(['id', 'name','is_active']);
+    }
+
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class, 'id_empresa', 'id')->select(['id', 'name', 'description', 'is_active']);
     }
 
 }
